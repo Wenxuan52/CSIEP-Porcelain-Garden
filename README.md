@@ -40,17 +40,9 @@ This project, "赏瓷苑" (Porcelain Garden), is an online platform featuring a 
    - Built robust user profiles for predicting and addressing both current and future user interests.
    - Ensured personalized recommendations for optimal user satisfaction.
    
-   <div style="display: flex; justify-content: center; align-items: center;">
-     <div style="text-align: center; margin: 0 20px;">
-       <img src="src/main/resources/figures/RA1.png" alt="RA 1" width="500" style="display: block; margin: auto;" />
-       <p>Candidate Generation Network</p>
-     </div>
-     <div style="text-align: center; margin: 0 20px;">
-       <img src="src/main/resources/figures/RA2.png" alt="RA 2" width="500" style="display: block; margin: auto;" />
-       <p>Preference Ranking Network</p>
-     </div>
-   </div>
-   
+| ![RA 1](src/main/resources/figures/RA1.png) | ![RA 2](src/main/resources/figures/RA2.png) |
+|---------------------------------------------|---------------------------------------------|
+| Candidate Generation Network                | Preference Ranking Network                 |
    
 
 ## Technical Stack
