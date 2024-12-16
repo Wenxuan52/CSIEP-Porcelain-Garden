@@ -1,9 +1,9 @@
 # Porcelain Garden ("赏瓷苑")
 
+<img src="src\main\resources\figures\logo.png" alt="LOGO" width="500" style="display: block; margin: auto;" />
+
 ## Project Overview
 This project, "赏瓷苑" (Porcelain Garden), is an online platform featuring a recommendation system for porcelains. The system integrates a CNN-based classifier for identifying the dynasty of porcelains and a recommendation algorithm tailored to user preferences. It combines state-of-the-art deep learning techniques with a user-friendly web interface to enhance the ceramic appreciation experience.
-
-<img src="src\main\resources\figures\logo.png" alt="LOGO" width="500" style="display: block; margin: auto;" />
 
 ## Key Features
 
@@ -27,8 +27,7 @@ This project, "赏瓷苑" (Porcelain Garden), is an online platform featuring a 
    - Developed an interactive online platform for showcasing the ceramic database.
    - Designed a user-friendly interface for seamless exploration and interaction.
 
-   <img src="src\main\resources\figures\Structure.png" alt="structure" style="zoom:20%;" />
-   
+   <img src="src\main\resources\figures\Structure.png" alt="structure" width="500" style="display: block; margin: auto;" />
    
    
 4. **User Behavior Data Collection and Analysis**
@@ -43,11 +42,11 @@ This project, "赏瓷苑" (Porcelain Garden), is an online platform featuring a 
    
    <div style="display: flex; justify-content: center; align-items: center;">
      <div style="text-align: center; margin: 0 20px;">
-       <img src="src/main/resources/figures/RA1.png" alt="RA 1" style="zoom:20%;" />
+       <img src="src/main/resources/figures/RA1.png" alt="RA 1" width="500" style="display: block; margin: auto;" />
        <p>Candidate Generation Network</p>
      </div>
      <div style="text-align: center; margin: 0 20px;">
-       <img src="src/main/resources/figures/RA2.png" alt="RA 2" style="zoom:20%;" />
+       <img src="src/main/resources/figures/RA2.png" alt="RA 2" width="500" style="display: block; margin: auto;" />
        <p>Preference Ranking Network</p>
      </div>
    </div>
@@ -80,9 +79,9 @@ The project's technical stack spans from the front-end UI to the back-end databa
 
 ## Web Demo
 
-<img src="src\main\resources\figures\demo1.png" alt="LOGO" style="zoom:30%;" />
+<img src="src\main\resources\figures\demo1.png" alt="LOGO" width="500" style="display: block; margin: auto;" />
 
-<img src="src\main\resources\figures\demo2.png" alt="LOGO" style="zoom:30%;" />
+<img src="src\main\resources\figures\demo2.png" alt="LOGO" width="500" style="display: block; margin: auto;" />
 
 ## Future Work
 - Further optimize the CNN classifier for improved accuracy.
