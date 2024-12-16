@@ -1,0 +1,209 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>briup-电子商务-订单确认</title>
+    <base th:href="${#request.getScheme()+'://'+#request.getServerName()+':'+#request.getServerPort()+#request.getContextPath()+'/'}">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/jquery-labelauty.css">
+    <meta charset="utf-8">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/estore.js"></script>
+
+</head>
+<body>
+<a href="#top" alt="回到顶部" class="toTop">
+    <button class="btn btn-top"><span class="glyphicon glyphicon-chevron-up"></span></button>
+</a>
+<div class="top" id="top">
+    <div class="herf" th:if="${session.user} ==null">
+        <span><a th:href="toLogin" href="login.html">登录</a></span>
+        <span><a th:href="toRegister" href="register.html">注册</a></span>
+    </div>
+    <div class="herf" th:if="${session.user} !=null">
+        <span><a href="index.html" th:href="toIndex">首页</a></span>
+        <span>欢迎<a th:text="${session.user.loginName}" style="color: red;">李四</a></span>
+        <span><a href="orders.html" th:href="toOrder">我的订单</a></span>
+        <span><a href="collect.html" th:href="toCollect">我的收藏</a></span>
+        <span><a href="login.html" th:href="exit">退出</a></span>
+    </div>
+</div>
+
+<div class="head">
+    <div class="row clearfix">
+        <div class="col-md-3 column">
+        </div>
+        <div class="col-md-6 column">
+            <div class="input-group search">
+                <input id="searchShopName" type="text" class="form-control" placeholder="请输入你要检索的书名"
+                       style="padding: 20px">
+                <span class="input-group-btn">
+						<button class="btn btn-search" type="button" onclick="searchShop()"><span
+                                class="glyphicon glyphicon-search"></span></button>
+					</span>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="nav">
+    <div class="col-md-2 column  type" data-toggle="collapse"
+         href="#typeMenu">订单确认
+    </div>
+</div>
+<div class="body">
+    <form action="orderSure.html" th:action="createOrder" onsubmit="return verify()">
+        <div class=" receiver-header">
+            填写并核对您的订单信息
+        </div>
+        <div class=" receiver row">
+            <div class="receiver-item row">
+                <p class="receiver-inner-title">
+                    收货人信息
+                    <button type="button" onclick="toAddShippingAddress()" class="btn btn-estore" style="float: right">
+                        添加收货人信息
+                    </button>
+                </p>
+                <div class="row" id="receive-message">
+
+                    <div class="row " th:each="add:${userAddressList}">
+                        <input id="shippingAddresss" th:value="${add.id}" type="radio" name="addressId"
+                               data-labelauty="视觉设计师"
+                               th:data-labelauty="${add.name} " th:if="${add.defaultValue}" checked>
+                        <input id="shippingAddresss" th:value="${add.id}" type="radio" name="addressId"
+                               data-labelauty="视觉设计师"
+                               th:data-labelauty="${add.name} " th:if="${!add.defaultValue}">
+                        <p th:text="${add.address}">地址</p>
+                        <p th:text="${add.phoneNum}">电话</p>
+                    </div>
+                    <div class="row" th:if="${userAddressList.isEmpty()}" style="height: 270px">
+                        <p class="tip">
+                            您暂未添加收获人信息 ，请<a
+                                style="color: #2c49e5 !important;text-decoration: underline;cursor: pointer">添加</a>收货人信息
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class=" col-md-4 other">
+                <div class="payType">
+                    <p class="title">支付方式
+                    <p>
+
+                        <input type="radio" name="payType" data-labelauty="支付宝支付" checked>
+                        <input type="radio" name="payType" data-labelauty="微信支付" disabled>
+                        <input type="radio" name="payType" data-labelauty="银行卡支付" disabled>
+                        <input type="radio" name="payType" data-labelauty="京东支付" disabled>
+                </div>
+                <div class="sendType">
+                    <p class="title">
+                        配送方式
+                    </p>
+                    <input type="radio" name="sendType" data-labelauty="快递配送" checked>
+                </div>
+            </div>
+            <div class=" receiver-item col-md-8">
+                <p class="receiver-inner-title">
+                    送货清单
+                    <a href="shopCar.html" th:href="toShopCar"
+                       style="display: inline-block;float: right;margin-right: 50px;  font-size: 14px; color: #337ab7 !important;">返回修改购物车</a>
+                </p>
+                <div class="bigDiv">
+                    <div class="twoDiv row" th:each="shopCar: ${shopCarList}">
+                        <input class="hide" name="ids" th:value="${shopCar.id}">
+                        <p style="margin: 10px">
+                            <span class="label label-success" th:text="${'商家：'+shopCar.shop.store}">商家：briup自营</span>
+                        </p>
+                        <!--遍历显示book  -->
+                        <div class="col-md-2 column pic">
+                            <img src="images/book_shopCart/book1.jpg" th:src="${shopCar.shop.img}">
+                        </div>
+                        <div class="col-md-9  column order-message">
+                            <div class="row">
+                            <span class="col-md-8  column"
+                                  th:text="${shopCar.shop.name}">JAVA核心技术</span>
+                                <span class="col-md-2  column" th:if="${shopCar.shop.discount}"
+                                      th:text="${shopCar.shop.discountPrice}">¥ 81.00</span>
+                                <span class="col-md-2  column" th:if="${!shopCar.shop.discount}"
+                                      th:text="${shopCar.shop.selling_price}">¥ 81.00</span>
+                                <span class="col-md-2  column" th:text="'x'+${shopCar.num}">×1</span>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="allBottom">
+            <p class="caozuo">
+                <button type="submit">去结算</button>
+            </p>
+            <span>应付：<font
+                    id="price-sum" style="color: #b11e22;" th:text="${sumPrice}"> 199.0</font>元
+				</span>
+
+        </div>
+    </form>
+</div>
+
+<div class="footer">
+    <div class="row clearfix icons">
+        <div class="col-md-3 column">
+            <img src="images/icons/icon_1_17.png">
+            品目繁多 愉悦购物
+        </div>
+        <div class="col-md-3 column">
+            <img src="images/icons/icon_1_20.png">
+            正品保障 天天低价
+        </div>
+        <div class="col-md-3 column">
+            <img src="images/icons/icon_1_23.png">
+            极速物流 特色定制
+        </div>
+        <div class="col-md-3 column">
+            <img src="images/icons/icon_1_25.png">
+            优质服务 以客为尊
+        </div>
+    </div>
+    <div class="links">
+        <p>
+            <span>关于我们</span>|
+            <span>联系我们</span>|
+            <span>加我我们</span>|
+            <span>友情链接</span>
+        </p>
+        <p>沪ICP备14033591号-8 东软briup.com版权所有 东软软件科技有限公司</p>
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="js/jquery-labelauty.js"></script>
+<script>
+    $(function () {
+        $(':input').labelauty()
+    })
+
+    $('#receive-message input')
+
+    function toAddShippingAddress() {
+        location.href = "toAddShippingAddress"
+    }
+
+    function verify() {
+        var value = $('#ishippingAddresss').val()
+        if (value === null || value === '') {
+            alert("还未选择收货地址 请选择收货地址 ")
+            return fasle;
+        }else{
+            return  true;
+        }
+    }
+
+
+</script>

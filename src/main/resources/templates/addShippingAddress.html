@@ -1,0 +1,195 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <base th:href="${#request.getScheme()+'://'+#request.getServerName()+':'+#request.getServerPort()+#request.getContextPath()+'/'}">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>briup电子商务-添加收货信息</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/estore.js"></script>
+
+</head>
+<body>
+<div class="top" id="top">
+    <div class="herf" th:if="${session.user} ==null">
+        <span><a th:href="toLogin" href="login.html">登录</a></span>
+        <span><a th:href="toRegister" href="register.html">注册</a></span>
+    </div>
+    <div class="herf" th:if="${session.user} !=null">
+        <span>欢迎<a th:text="${session.user.loginName}" style="color: red;">李四</a></span>
+        <span><a href="index.html" th:href="toIndex">首页</a></span>
+        <span><a href="orders.html" th:href="toOrder">我的收藏</a></span>
+        <span><a href="login.html" th:href="exit">退出</a></span>
+    </div>
+</div>
+
+<!--头部-->
+<div class="head">
+    <div class="row clearfix">
+        <div class="col-md-3 column">
+        </div>
+        <div class="col-md-6 column">
+            <div class="input-group search">
+                <input id="searchShopName" type="text" class="form-control" placeholder="请输入你要检索的书名"
+                       style="padding: 20px">
+                <span class="input-group-btn">
+						<button class="btn btn-search" type="button" onclick="searchShop()"><span
+                                class="glyphicon glyphicon-search"></span></button>
+					</span>
+            </div>
+        </div>
+        <div class="col-md-3 column bag">
+            <a href="shopCar.html" th:href="toShopCar">
+                <button class="btn btn-estore">
+                    <span class="glyphicon glyphicon-shopping-cart"></span>&nbsp;购物车
+                </button>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="nav">
+    <div class="col-md-2 column  type" data-toggle="collapse"
+         href="#typeMenu" style="width: 240px !important;">添加收货信息
+    </div>
+</div>
+
+<div class="body">
+
+    <div class="addShippingAddress">
+        <div class="addressList">
+            <ul>
+                <li th:each="address : ${addressList}">
+                    <div class="addressUserMsg">
+                        <div class="msgOne">
+                            <p><span class="name" th:text="${address.name}">收货人</span><span class="tel" th:text="${address.phoneNum}">电话</span></p>
+                            <p class="address" th:text="${address.address}">地址</p>
+                        </div>
+                        <div class="msgTwo">
+                            <button class="btn btn-info btn-xs">编辑</button>
+                            <button class="btn btn-danger btn-xs" th:onclick="'delAddress('+${address.id}+')'">删除</button>
+                            <button class="btn btn-default btn-xs" th:if="${address.defaultValue}" disabled="disabled">默认</button>
+                            <button class="btn btn-primary btn-xs" th:if="${!address.defaultValue}" >设为默认</button>
+                        </div>
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+        <div class="form">
+            <form role="form" action="addShippingAddress" method="post" onsubmit="return verfiy()">
+                <div class="form-group">
+                    <label>收货人</label><input type="text" class="form-control" name="name" onblur="verfiyName() "
+                                             id="name"
+                />
+                </div>
+                <div id="verfiyName" class="verfiy"></div>
+                <div class="form-group">
+                    <label>联系电话</label><input type="tel" class="form-control"
+                                              id="phoneNum" name="phoneNum" onblur="verfiyPhone()"/>
+                </div>
+                <div id="verfiyPhone" class="verfiy"></div>
+
+                <div class="form-group">
+                    <label> 收货地址</label><input type="text" class="form-control"
+                                               id="address" name="address" onblur="verfiyaddress()"/>
+                </div>
+                <div id="verfiyaddress" class="verfiy"></div>
+
+                <button type="submit" class="btn btn-success">添加</button>
+            </form>
+        </div>
+
+    </div>
+
+
+</div>
+<!--脚部-->
+
+<div class="footer">
+    <div class="row clearfix icons">
+        <div class="col-md-3 column">
+            <img src="images/icons/icon_1_17.png">
+            品目繁多 愉悦购物
+        </div>
+        <div class="col-md-3 column">
+            <img src="images/icons/icon_1_20.png">
+            正品保障 天天低价
+        </div>
+        <div class="col-md-3 column">
+            <img src="images/icons/icon_1_23.png">
+            极速物流 特色定制
+        </div>
+        <div class="col-md-3 column">
+            <img src="images/icons/icon_1_25.png">
+            优质服务 以客为尊
+        </div>
+    </div>
+    <div class="links">
+        <p>
+            <span>关于我们</span>|
+            <span>联系我们</span>|
+            <span>加我我们</span>|
+            <span>友情链接</span>
+        </p>
+        <p>沪ICP备14033591号-8 东软briup.com版权所有 东软软件科技有限公司</p>
+
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+
+
+    function verfiy() {
+        var divArr = $('.verfiy')
+        divArr.foreach((item) => {
+            s = item.text()
+
+            if (s === '' || s === null) {
+                return true;
+            } else {
+                return false;
+            }
+        })
+
+
+    }
+
+    function verfiyaddress() {
+        var s = $('#address').val();
+
+        if (s === '' || s === null) {
+            $('#verfiyaddress').text("请填写完整的收获地址")
+        } else {
+            $('#verfiyaddress').text("")
+        }
+    }
+
+    function verfiyPhone() {
+        var s = $('#phoneNum').val();
+        if (s === '' || s === null) {
+            $('#verfiyPhone').text("请填写正确的联系方式")
+        } else {
+            $('#verfiyPhone').text("")
+        }
+    }
+
+    function verfiyName() {
+        var s = $('#name').val();
+        console.log(s)
+        if (s === '' || s === null) {
+            $('#verfiyName').text("请填写收获人姓名")
+        } else {
+            $('#verfiyName').text("")
+        }
+    }
+    function delAddress(id) {
+         console.log(id)
+
+    }
+
+</script>

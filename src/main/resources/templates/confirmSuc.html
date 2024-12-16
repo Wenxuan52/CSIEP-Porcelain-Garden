@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <base th:href="${#request.getScheme()+'://'+#request.getServerName()+':'+#request.getServerPort()+#request.getContextPath()+'/'}">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <meta charset="utf-8">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/estore.js"></script>
+    <title>结算成功页面</title>
+</head>
+<body>
+<a href="#top" alt="回到顶部" class="toTop">
+    <button class="btn btn-top"><span class="glyphicon glyphicon-chevron-up"></span></button>
+</a>
+<div class="top" id="top">
+    <div class="herf" th:if="${session.user} ==null">
+        <span><a th:href="toLogin" href="login.html">登录</a></span>
+        <span><a th:href="toRegister" href="register.html">注册</a></span>
+    </div>
+    <div class="herf" th:if="${session.user} !=null">
+        <span><a href="index.html" th:href="toIndex">首页</a></span>
+        <span>欢迎<a th:text="${session.user.loginName}" style="color: red;">李四</a></span>
+        <span><a href="orders.html" th:href="toOrder">我的订单</a></span>
+        <span><a href="collect.html" th:href="toCollect">我的收藏</a></span>
+        <span><a href="login.html" th:href="exit">退出</a></span>
+    </div>
+</div>
+<!--头部-->
+<div class="head">
+    <div class="row clearfix">
+        <div class="col-md-3 column">
+        </div>
+        <div class="col-md-6 column">
+            <div class="input-group search">
+                <input id="searchShopName" type="text" class="form-control" placeholder="请输入你要检索的书名"
+                       style="padding: 20px">
+                <span class="input-group-btn">
+						<button class="btn btn-search" type="button" onclick="searchShop()"><span
+                                class="glyphicon glyphicon-search"></span></button>
+					</span>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!--中间部分div-->
+<div class="body">
+    <div class="row orders">
+        <table class="table order-tb table-bordered">
+
+            <tr>
+                <td class="order-message-1">
+                    <div>
+                        <span>订单编号：</span>
+                        <span class="order-no" th:text="${order.id}">21343546576543erfgerwd</span>
+                        <span>创建时间:</span>
+                        <span class="create-date" th:text="${order.createDate}">2020-11-22</span>
+
+                    </div>
+                </th>
+            </tr>
+            <tr>
+                <td class="order-message-2">
+                    <div>
+                        <span>订单金额： <b class="order-price" th:text="${'￥'+order.sumPrice}">¥353.80</b> </span>
+                        <span>支付方式： <b>支付宝支付</b></span>
+                        <span>配送方式： <b>快递配送</b></span>
+
+                    </div>
+                </td>
+
+            </tr>
+            <tr>
+                <td class="bg-warning">
+                    <div class="ship-address">
+                        <b>收货信息：</b>
+                        <span th:text="${order.shippingAddress.name}">收货人：</span>
+                        <span th:text="${order.shippingAddress.address}">地址：</span>
+                        <span th:text="${order.shippingAddress.phoneNum}">电话：</span>
+                    </div>
+            </tr>
+            <tr th:each="item:${order.orderItems}">
+                <td class="order-item">
+                    <div>
+                        <p><label class="label-success label" th:text="${item.shop.store}">东软自营</label></p>
+                        <img src="images/miaosha.png" class="shop-img" th:src="${item.shop.img}">
+                        <div class="shop-msg">
+                            <b th:text="${item.shop.name}">吉顺（jishun）16A插座接线板插座大功率4000W插排空调插座插线板拖线板10A插头 1</b>
+                        </div>
+
+                        <span class="price" th:text="${item.shop.discountPrice}"
+                              th:if="${item.shop.discount}">308元</span>
+                        <span class="price" th:text="${item.shop.selling_price}"
+                              th:if="${!item.shop.discount}">308元</span>
+                        <span class="num" th:text="${'X'+item.num}"> x1</span>
+
+                        <span >
+				        订单支付成功！
+				        <a th:href="toIndex" href="index.html" style="display:inline-block;font-size:15px;color: darkred !important;">继续购物</a>
+			</span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+
+    </div>
+</div>
+<!--脚部-->
+
+<div class="footer">
+    <div class="row clearfix icons">
+        <div class="col-md-3 column">
+            <img src="images/icons/icon_1_17.png">
+            品目繁多 愉悦购物
+        </div>
+        <div class="col-md-3 column">
+            <img src="images/icons/icon_1_20.png">
+            正品保障 天天低价
+        </div>
+        <div class="col-md-3 column">
+            <img src="images/icons/icon_1_23.png">
+            极速物流 特色定制
+        </div>
+        <div class="col-md-3 column">
+            <img src="images/icons/icon_1_25.png">
+            优质服务 以客为尊
+        </div>
+    </div>
+    <div class="links">
+        <p>
+            <span>关于我们</span>|
+            <span>联系我们</span>|
+            <span>加我我们</span>|
+            <span>友情链接</span>
+        </p>
+        <p>沪ICP备14033591号-8 东软briup.com版权所有 东软软件科技有限公司</p>
+    </div>
+</div>
+</body>
+</html>

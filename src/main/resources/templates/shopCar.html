@@ -1,0 +1,257 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>briup-电子商务-购物车</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <base th:href="${#request.getScheme()+'://'+#request.getServerName()+':'+#request.getServerPort()+#request.getContextPath()+'/'}">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/estore.js"></script>
+</head>
+
+<body>
+<a href="#top" alt="回到顶部" class="toTop">
+    <button class="btn btn-top"><span class="glyphicon glyphicon-chevron-up"></span></button>
+</a>
+<div class="top" id="top">
+    <div class="herf" th:if="${session.user} ==null">
+        <span><a th:href="toLogin" href="login.html">登录</a></span>
+        <span><a th:href="toRegister" href="register.html">注册</a></span>
+    </div>
+    <div class="herf" th:if="${session.user} !=null">
+        <span><a href="index.html" th:href="toIndex">首页</a></span>
+        <span>欢迎<a th:text="${session.user.loginName}" style="color: red;">李四</a></span>
+        <span><a href="orders.html" th:href="toOrder">我的订单</a></span>
+        <span><a href="collect.html" th:href="toCollect">我的收藏</a></span>
+        <span><a href="login.html" th:href="exit">退出</a></span>
+    </div>
+</div>
+
+<div class="head">
+    <div class="row clearfix">
+        <div class="col-md-3 column">
+        </div>
+        <div class="col-md-6 column">
+            <div class="input-group search">
+                <input id="searchShopName" type="text" class="form-control" placeholder="请输入你要检索的书名"
+                       style="padding: 20px">
+                <span class="input-group-btn">
+						<button class="btn btn-search" type="button" onclick="searchShop()"><span
+                                class="glyphicon glyphicon-search"></span></button>
+					</span>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="nav">
+    <div class="col-md-2 column  type" data-toggle="collapse"
+         href="#typeMenu">购物车
+    </div>
+</div>
+<div class="body">
+
+    <form action="confirm.html" th:action="advanceOrder" method="get">
+        <div class="none " th:if="${shopCarList.isEmpty()}">
+            <h3>购物车中暂无商品，先去 <a href="list.html" th:href="searchShop" >挑选</a>心仪的商品吧</h3>
+        </div>
+        <div class="table-shopCar" th:if="${!shopCarList.isEmpty()}">
+            <div class="table_head row ">
+                <span style="width:14px"></span>
+                <span class="col-md-2 column">缩略图</span>
+                <span class="col-md-4 column">商品</span>
+                <span class="col-md-1 column">单价(元)</span>
+                <span class="col-md-2 column">数量</span>
+                <span class="col-md-1 column">小计(元)</span>
+                <span class="col-md-1 column">操作</span>
+            </div>
+
+            <div class="table_body " th:if="${!shopCarList.isEmpty()}">
+                <div class="row" th:each="shopCar:${shopCarList}">
+                    <div>
+                        <p style="margin-top: 40px; float: left"><input checked="checked" type="checkbox" class="ids" value="" name="ids"
+                                                                        th:value="${shopCar.id}"></p>
+                    </div>
+                    <div class="col-md-2 column">
+                        <img class="img-thumbnail shop-img" src="images/book_shopCart/book1.jpg"
+                             th:src="${shopCar.shop.img}">
+                    </div>
+                    <div class="col-md-4 column ">
+                        <p style="overflow: hidden;text-overflow: ellipsis; white-space: nowrap;">
+                            <sapn th:text="${shopCar.shop.name}">javascript技术</sapn>
+                        </p>
+                    </div>
+
+                    <div class="col-md-1 column book-price" th:if="${shopCar.shop.discount}"
+                         th:text="${shopCar.shop.discountPrice}">46
+                    </div>
+                    <div class="col-md-1 column book-price" th:if="${!shopCar.shop.discount}"
+                         th:text="${shopCar.shop.selling_price}">46
+                    </div>
+                    <div class="col-md-2 column booknum">
+                        <button type="button" class="btn btn-primary btn-sm add">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                        <span class="btn value" th:text="${shopCar.num}">1</span>
+                        <button type="button" class="btn btn-primary btn-sm sub">
+                            <span class="glyphicon glyphicon-minus"></span>
+                        </button>
+                    </div>
+                    <div class="col-md-1 column book-price-sum">46</div>
+                    <div class="col-md-1 column" style="padding: 36px 0px">
+
+                        <button type="button" class="btn btn-danger delShopCar"><span
+                                class="glyphicon glyphicon-trash"></span></button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="allBottom" th:if="${!shopCarList.isEmpty()}">
+            <p class="caozuo">
+                <button type="submit">去结算</button>
+            </p>
+            <span>已选择<font id="book-num" style="color: #b11e22;">0</font>
+                件商品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;总价(不含运费)：¥<font id="price-num" style="color: #b11e22;"> 0.00
+                </font>元
+            </span>
+        </div>
+    </form>
+</div>
+
+<div class="footer">
+    <div class="row clearfix icons">
+        <div class="col-md-3 column">
+            <img src="images/icons/icon_1_17.png">
+            品目繁多 愉悦购物
+        </div>
+        <div class="col-md-3 column">
+            <img src="images/icons/icon_1_20.png">
+            正品保障 天天低价
+        </div>
+        <div class="col-md-3 column">
+            <img src="images/icons/icon_1_23.png">
+            极速物流 特色定制
+        </div>
+        <div class="col-md-3 column">
+            <img src="images/icons/icon_1_25.png">
+            优质服务 以客为尊
+        </div>
+    </div>
+    <div class="links">
+        <p>
+            <span>关于我们</span>|
+            <span>联系我们</span>|
+            <span>加我我们</span>|
+            <span>友情链接</span>
+        </p>
+        <p>沪ICP备14033591号-8 东软briup.com版权所有 东软软件科技有限公司</p>
+    </div>
+</div>
+</div>
+</body>
+<script>
+    $(function () {
+       init();
+        $('.ids').click(function () {
+            init();
+        })
+        $('.delShopCar').click(function () {
+           const shopId= $(this).parents(".row").children('div').children('p').children('.ids').val()
+            var p=  $(this).parents('.row')
+            if (confirm("确定删除该商品?")) {
+                //点击确定后操作
+                $.ajax({
+                    type: 'get',
+                    url: 'delShopCar?shopCarId=' + shopId,
+                    success: function () {
+
+                        alert("删除成功")
+                        window.location.reload()
+                    },
+                    error: function () {
+                        alert("删除失败")
+                    },
+                })
+
+
+            }
+        })
+    })
+
+    function init() {
+        var rows = $('.table-shopCar .table_body .row');
+        rows.each(function () {
+            var price = $(this).children('.book-price').text();
+            var num = $(this).children('.booknum').children('.value').text();
+            $(this).children('.book-price-sum').text(num * price)
+        })
+
+        var sum = 0.0;
+        var booknum = 0;
+        $('input[name="ids"]:checked').each(
+            function () {
+                const parent = $(this).parents(".row");
+                sum += parseFloat(parent.children('.book-price-sum').text())
+                booknum += parseInt(parent.children(".booknum").children(".value").text()) ;
+            }
+        )
+
+        $("#price-num").text(sum);
+        $("#book-num").text(booknum);
+
+    }
+
+
+
+    //购物车数量加载
+    $(".add").click(function () {
+        var p = $(this).parents(".row");
+        const shopId=p.children('div').children('p').children('.ids').val()
+        var value = p.children(".booknum").children(".value");
+        if (parseInt(value.text()) < 10) {
+            const i=parseInt(value.text()) + 1
+            $.ajax({
+                type: 'get',
+                url: 'updateShopCar?shopCarId=' + shopId+"&num="+i,
+                success: function () {
+                    value.text(i)
+                    init()
+                },
+                error: function () {
+
+                },
+            })
+        }
+
+
+
+
+    });
+    $(".sub").click(function () {
+        var p = $(this).parents(".row");
+        const shopId=p.children('div').children('p').children('.ids').val()
+        var value = p.children(".booknum").children(".value");
+        if (parseInt(value.text()) > 1) {
+          const i= parseInt(value.text()) - 1
+            $.ajax({
+                type: 'get',
+                url: 'updateShopCar?shopCarId=' + shopId+"&num="+i,
+                success: function () {
+                    value.text(i)
+                    init()
+                },
+                error: function () {
+
+                },
+            })
+        }
+
+    });
+
+</script>
+
+</html>

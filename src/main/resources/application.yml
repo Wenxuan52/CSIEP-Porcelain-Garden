@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/shops?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: 8dj28izn93
+
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+
+
+logging:
+  config: classpath:logback-spring2.xml
+
+server:
+  port: 9898
