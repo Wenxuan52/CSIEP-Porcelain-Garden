@@ -3,7 +3,9 @@
 ## Project Overview
 This project, "赏瓷苑" (Porcelain Garden), is an online platform featuring a recommendation system for porcelains. The system integrates a CNN-based classifier for identifying the dynasty of porcelains and a recommendation algorithm tailored to user preferences. It combines state-of-the-art deep learning techniques with a user-friendly web interface to enhance the ceramic appreciation experience.
 
-<img src="src\main\resources\figures\logo.png" alt="LOGO" width="300" />
+<div style="text-align: center;">
+   <img src="src\main\resources\figures\logo.png" alt="LOGO" width="700" />
+<\div>
 
 ## Key Features
 
