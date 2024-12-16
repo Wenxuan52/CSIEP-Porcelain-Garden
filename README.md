@@ -40,10 +40,10 @@ This project, "赏瓷苑" (Porcelain Garden), is an online platform featuring a 
    - Built robust user profiles for predicting and addressing both current and future user interests.
    - Ensured personalized recommendations for optimal user satisfaction.
    
-| ![RA 1](src/main/resources/figures/RA1.png) | ![RA 2](src/main/resources/figures/RA2.png) |
-|---------------------------------------------|---------------------------------------------|
-| Candidate Generation Network                | Preference Ranking Network                 |
-   
+| <img src="src/main/resources/figures/RA1.png" alt="RA 1" width="300"/> | <img src="src/main/resources/figures/RA2.png" alt="RA 2" width="300"/> |
+|-------------------------------------------------------------------------|-------------------------------------------------------------------------|
+| Candidate Generation Network                                           | Preference Ranking Network                                             |
+
 
 ## Technical Stack
 The project's technical stack spans from the front-end UI to the back-end database and includes the following components:
@@ -71,9 +71,9 @@ The project's technical stack spans from the front-end UI to the back-end databa
 
 ## Web Demo
 
-<img src="src\main\resources\figures\demo1.png" alt="LOGO" width="500" style="display: block; margin: auto;" />
+<img src="src\main\resources\figures\demo1.png" alt="LOGO" width="700" style="display: block; margin: auto;" />
 
-<img src="src\main\resources\figures\demo2.png" alt="LOGO" width="500" style="display: block; margin: auto;" />
+<img src="src\main\resources\figures\demo2.png" alt="LOGO" width="700" style="display: block; margin: auto;" />
 
 ## Future Work
 - Further optimize the CNN classifier for improved accuracy.
