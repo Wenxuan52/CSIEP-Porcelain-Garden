@@ -27,7 +27,7 @@ This project, "赏瓷苑" (Porcelain Garden), is an online platform featuring a 
    - Developed an interactive online platform for showcasing the ceramic database.
    - Designed a user-friendly interface for seamless exploration and interaction.
 
-   <img src="src\main\resources\figures\structure.png" alt="structure" style="zoom:20%;" />
+   <img src="src\main\resources\figures\Structure.png" alt="structure" style="zoom:20%;" />
    
    
    
